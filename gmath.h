@@ -20,10 +20,13 @@ color calculate_ambient(color alight, double *areflect );
 color calculate_diffuse(double light[2][3], double *dreflect, double *normal );
 color calculate_specular(double light[2][3], double *sreflect, double *view, double *normal );
 void limit_color( color * c );
-
+color addc(color a, color b, color c);
 //vector functions
 void normalize( double *vector );
 double dot_product( double *a, double *b );
 double *calculate_normal(struct matrix *polygons, int i);
+double exponent(double a, int b);
+double* addv(double *a, double *b);
+double* scalev(double a, double *b);
 
 #endif
