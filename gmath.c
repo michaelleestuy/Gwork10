@@ -39,6 +39,11 @@ color calculate_diffuse(double light[2][3], double *dreflect, double *normal ) {
   d.red = lcolor[0] * dreflect[0] * dot_product(lvector, normal);
   d.green = lcolor[1] * dreflect[1] * dot_product(lvector, normal);
   d.blue = lcolor[2] * dreflect[2] * dot_product(lvector, normal);
+  if (dot_product(lvector, normal) <= 0) {
+    d.red = 0;
+    d.blue = 0;
+    d.green = 0;
+  }
   return d;
 }
 
@@ -55,7 +60,11 @@ color calculate_specular(double light[2][3], double *sreflect, double *view, dou
   s.blue = (int)(lcolor[2] * sreflect[2] * exponent((dot_product(addv(scalev(2.0 * dot_product(normal, lvector), normal), scalev( -1.0, lvector)), view)), 16));
   
 
-
+  if (dot_product(normal, lvector) <= 0) {
+    s.red = 0;
+    s.blue = 0;
+    s.green = 0;
+  }
   return s;
 }
 
@@ -95,6 +104,16 @@ void limit_color( color * c ) {
 
   if(c->blue > 255){
     c->blue = 255;
+  }
+  if(c->red < 0){
+    c->red = 0;
+  }
+  if(c->green < 0){
+    c->green = 0;
+  }
+
+  if(c->blue < 0){
+    c->blue = 0;
   }
 }
 
